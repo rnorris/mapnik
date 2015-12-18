@@ -69,7 +69,6 @@ shape_index_featureset<filterT>::shape_index_featureset(filterT const& filter,
 #endif
     }
     std::sort(offsets_.begin(), offsets_.end(), [](detail::node const& n0, detail::node const& n1)
-              //{ return n0.offset < n1.offset || (!(n0.offset < n1.offset) && n0.start < n1.start);});
               {return n0.offset != n1.offset ? n0.offset < n1.offset : n0.start < n1.start;});
     std::cerr <<  "shape_index_featureset: Query size=" << offsets_.size() << std::endl;
     MAPNIK_LOG_DEBUG(shape) << "shape_index_featureset: Query size=" << offsets_.size();
@@ -94,7 +93,7 @@ feature_ptr shape_index_featureset<filterT>::next()
             if (itr_->start!= -1) parts.emplace_back(itr_->start, itr_->end);
             ++itr_;
         }
-        std::cerr << "PARTS SIZE=" << parts.size() <<" offset=" << offset << std::endl;
+        //std::cerr << "PARTS SIZE=" << parts.size() <<" offset=" << offset << std::endl;
         mapnik::value_integer feature_id = shape_ptr_->id();
         shape_file::record_type record(shape_ptr_->reclength_ * 2);
         shape_ptr_->shp().read_record(record);
